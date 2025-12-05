@@ -1,0 +1,15 @@
+@theme {
+  --color-ungreen: rgb(255, 0, 0);
+  --color-blood: rgb(138, 7, 7);
+  --color-dark-800: rgba(0, 0, 0, 0.8);
+}
+@layer component {
+  .text-title-xxl {
+    font-size: 60px;
+    font-weight: 800;
+  }
+  .text-title-l {
+    font-size: 24px;
+    font-weight: 600;
+  }
+}
