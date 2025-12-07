@@ -6,10 +6,21 @@ interface IUser {
   name?: string
   id: string
   createdAt: string
+  accessToken: string
 }
 
 export const useUserStore = defineStore('user', () => {
-  const user = ref<IUser | null>(null)
-
-  return { user }
+  const emptyUser: IUser = {
+    email: '',
+    name: '',
+    id: '',
+    createdAt: '',
+    updatedAt: '',
+  }
+  const accessToken = ref<string>('')
+  const user = ref<IUser>(emptyUser)
+  const setUser = (newUser: IUser) => {
+    user.value = newUser
+  }
+  return { user, accessToken, setUser }
 })

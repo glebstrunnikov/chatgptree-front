@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useUserStore } from '@/stores/user'
 const userStore = useUserStore()
-const isLoggedIn = computed(() => !!userStore.user)
+const isLoggedIn = computed(() => !!userStore.user.id)
 </script>
 
 <template>
@@ -13,5 +13,6 @@ const isLoggedIn = computed(() => !!userStore.user)
     >
     <RouterLink v-if="!isLoggedIn" to="/login"><div class="text-title-l">Log in</div></RouterLink>
     <RouterLink v-if="isLoggedIn" to="/logout"><div class="text-title-l">Log out</div></RouterLink>
+    <div v-if="isLoggedIn" class="text-title-l">Hi, {{ userStore.user?.name }}</div>
   </div>
 </template>
