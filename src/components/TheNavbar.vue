@@ -12,7 +12,9 @@ const isLoggedIn = computed(() => !!userStore.user.id)
       ><div class="text-title-l">Register</div></RouterLink
     >
     <RouterLink v-if="!isLoggedIn" to="/login"><div class="text-title-l">Log in</div></RouterLink>
-    <RouterLink v-if="isLoggedIn" to="/logout"><div class="text-title-l">Log out</div></RouterLink>
+    <div @click="userStore.logout()" v-if="isLoggedIn" class="text-title-l cursor-pointer">
+      Log out
+    </div>
     <div v-if="isLoggedIn" class="text-title-l">Hi, {{ userStore.user?.name }}</div>
   </div>
 </template>

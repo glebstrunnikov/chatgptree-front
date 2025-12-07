@@ -21,4 +21,7 @@ export const userApi = {
   refresh: async () => {
     return http.post('/users/refresh')
   },
+  logout: async () => {
+    return http.post('/users/logout')
+  },
 }

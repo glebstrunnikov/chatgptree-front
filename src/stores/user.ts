@@ -1,13 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-
-interface IUser {
-  email: string
-  name?: string
-  id: string
-  createdAt: string
-  accessToken: string
-}
+import { userApi } from '@/api/user'
+import type { IUser } from '@/types/user'
 
 export const useUserStore = defineStore('user', () => {
   const emptyUser: IUser = {
@@ -22,5 +16,10 @@ export const useUserStore = defineStore('user', () => {
   const setUser = (newUser: IUser) => {
     user.value = newUser
   }
-  return { user, accessToken, setUser }
+  function logout() {
+    user.value = emptyUser
+    accessToken.value = ''
+    userApi.logout()
+  }
+  return { user, accessToken, setUser, logout }
 })
