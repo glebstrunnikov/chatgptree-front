@@ -15,7 +15,11 @@ export const chatApi = {
       chatId: chatId,
       path: path,
     })
-    console.log(res)
+
+    return res
+  },
+  loadChat: async (chatId: string, path: string) => {
+    const res = await http.get(`/chat/load/${chatId}/${path}`)
     return res
   },
 }

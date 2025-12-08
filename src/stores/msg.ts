@@ -36,7 +36,6 @@ export const useMsgStore = defineStore('msg', () => {
 
   async function createChat(question: string) {
     const res = await chatApi.createChat(question, userStore.user.id)
-    console.log(res)
     messages.value = res.data.messages
     chatId.value = res.data.chatId
     tip.value = res.data.messages[res.data.messages.length - 1]
@@ -51,6 +50,16 @@ export const useMsgStore = defineStore('msg', () => {
     tip.value = res.data[res.data.length - 1]
   }
 
+  async function loadMessages(cId: string, path: string) {
+    const res = await chatApi.loadChat(cId, path)
+    if (!res.data) {
+      throw new Error('No messages returned from loadChat')
+    }
+    messages.value = res.data
+    chatId.value = res.data.chatId
+    tip.value = messages.value[messages.value.length - 1]!
+  }
+
   return {
     messages,
     chatId,
@@ -58,5 +67,6 @@ export const useMsgStore = defineStore('msg', () => {
     branch,
     createChat,
     ask,
+    loadMessages,
   }
 })
