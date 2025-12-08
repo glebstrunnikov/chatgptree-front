@@ -8,9 +8,8 @@ const router = useRouter()
 const username = ref('')
 const password = ref('')
 async function login() {
-  const res = await userApi.login({ name: username.value, password: password.value })
-  console.log(res)
-  //   router.push('/')
+  await userStore.login(username.value, password.value)
+  router.push('/')
 }
 </script>
 <template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="border rounded-full p-2 hover:bg-gray-500 cursor-pointer">
+  <div class="border rounded-full py-2 px-4 hover:bg-gray-500 cursor-pointer">
     <slot></slot>
   </div>
 </template>

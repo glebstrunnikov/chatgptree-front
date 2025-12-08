@@ -40,6 +40,7 @@ http.interceptors.response.use(
   },
   async (error) => {
     if (error) {
+      console.log('401 here')
       const originalRequest = error.config
       if (originalRequest._retry || originalRequest.url.includes('/users/refresh')) {
         return Promise.reject(error)
@@ -51,6 +52,7 @@ http.interceptors.response.use(
           error?.response?.data?.message === 'Unauthorized')
       ) {
         originalRequest._retry = true
+        console.log('Refreshing token due to 401 error')
         await updateAccessToken()
         await new Promise((resolve) => setTimeout(resolve, 100))
         const retry = await http(originalRequest)

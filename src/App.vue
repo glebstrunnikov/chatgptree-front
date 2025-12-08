@@ -6,7 +6,7 @@ const userStore = useUserStore()
 
 onMounted(async () => {
   const user = await userApi.me()
-  userStore.setUser(user.data)
+  userStore.setUserAndToken(user.data)
 })
 </script>
 

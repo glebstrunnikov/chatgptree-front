@@ -5,3 +5,7 @@ export interface IUser {
   createdAt: string
   updatedAt: string
 }
+
+export interface IUserResponse extends IUser {
+  accessToken: string
+}
