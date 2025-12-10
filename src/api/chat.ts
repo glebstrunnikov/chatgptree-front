@@ -20,6 +20,7 @@ export const chatApi = {
   },
   loadBranch: async (chatId: string, path: string) => {
     const res = await http.get(`/chat/load-branch/${chatId}/${path}`)
+    console.log(res)
     return res
   },
 }
