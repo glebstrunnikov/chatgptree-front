@@ -8,7 +8,7 @@ const props = defineProps<{
 <template>
   <div
     class="w-full flex flex-col p-4"
-    :class="role === 'user' ? 'justify-end text-right' : 'justify-start text-left'"
+    :class="role === 'user' ? 'items-end text-right' : 'items-start text-left'"
   >
     <div class="text-body-s text-gray-400 px-2 py-1">
       {{ `${role.charAt(0).toUpperCase() + role.slice(1)}:` }}

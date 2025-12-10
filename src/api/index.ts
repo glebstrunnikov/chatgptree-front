@@ -51,9 +51,11 @@ http.interceptors.response.use(
           error?.response?.data?.message === 'Unauthorized')
       ) {
         originalRequest._retry = true
+        console.log('updating token...')
         await updateAccessToken()
         await new Promise((resolve) => setTimeout(resolve, 100))
         const retry = await http(originalRequest)
+        console.log(retry)
         return retry
       }
       // else if (error?.response === 500) {

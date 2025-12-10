@@ -50,10 +50,16 @@ export const useMsgStore = defineStore('msg', () => {
     tip.value = res.data[res.data.length - 1]
   }
 
-  async function loadMessages(cId: string, path: string) {
-    const res = await chatApi.loadChat(cId, path)
+  function clearMessages() {
+    messages.value = []
+    chatId.value = ''
+    tip.value = null
+  }
+
+  async function loadBranch(cId: string, path: string) {
+    const res = await chatApi.loadBranch(cId, path)
     if (!res.data) {
-      throw new Error('No messages returned from loadChat')
+      throw new Error('No messages returned from loadBranch')
     }
     messages.value = res.data
     chatId.value = res.data.chatId
@@ -67,6 +73,7 @@ export const useMsgStore = defineStore('msg', () => {
     branch,
     createChat,
     ask,
-    loadMessages,
+    loadBranch,
+    clearMessages,
   }
 })

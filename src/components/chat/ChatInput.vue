@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 const model = defineModel<string>()
+const emit = defineEmits<{
+  (e: 'submit'): void
+}>()
+
 const showScrollbar = ref(false)
 function autoResize(event: Event) {
   const textarea = event.target as HTMLTextAreaElement
@@ -13,16 +17,25 @@ function autoResize(event: Event) {
     textarea.style.height = '500px'
   }
 }
+
+function handleKeydown(e: KeyboardEvent) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault()
+    emit('submit')
+  }
+  // Shift+Enter will create newlines normally
+}
 </script>
 
 <template>
   <textarea
-    class="border border-black rounded-xl p-2 m-2 w-150 resize-none custom-scrollbar text-title-m"
+    class="border border-black rounded-xl p-2 m-2 resize-none custom-scrollbar text-title-m"
     :class="showScrollbar ? 'custom-scrollbar' : 'no-scrollbar'"
     name="question"
     id="question"
     v-model="model"
     @input="autoResize"
+    @keydown="handleKeydown"
   ></textarea>
 </template>
 <style scoped>

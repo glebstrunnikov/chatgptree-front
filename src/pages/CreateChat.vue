@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 
 import { useMsgStore } from '@/stores/msg'
 import { useRouter } from 'vue-router'
@@ -26,7 +26,7 @@ async function sendQuestion() {
     <form class="flex flex-col gap-4 text-center items-center" @submit.prevent="sendQuestion">
       <div class="text-title-l" for="question">Ask the neuromoron</div>
 
-      <ChatInput v-model="questionText" />
+      <ChatInput @submit="sendQuestion" v-model="questionText" />
 
       <BaseButton v-if="!showLoader" @click="sendQuestion" type="submit">Send</BaseButton>
       <i v-else class="fa-solid fa-hourglass-half"></i>

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useMsgStore } from '@/stores/msg'
 import ChatInput from '@/components/chat/ChatInput.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
-import ChatMessage from '@/components/ChatMessage.vue'
+import ChatMessage from '@/components/chat/ChatMessage.vue'
+import ChatBlock from '@/components/chat/ChatBlock.vue'
 import type { IMessage } from '@/types/message'
 const route = useRoute()
 const router = useRouter()
@@ -20,19 +21,23 @@ async function sendQuestion() {
 }
 onMounted(async () => {
   if (query.value.id && query.value.path) {
-    await msgStore.loadMessages(query.value.id as string, query.value.path as string)
+    await msgStore.loadBranch(query.value.id as string, query.value.path as string)
   }
+})
+onUnmounted(() => {
+  msgStore.clearMessages()
 })
 </script>
 
 <template>
-  <div class="w-full h-full flex justify-center items-center p-24 gap-12">
+  <div class="w-full h-full flex items-center px-18 gap-6">
     <form @submit.prevent="sendQuestion" class="flex-3 flex flex-col gap-4 text-center">
       <label for="question"> ask the neuromoron </label>
-      <ChatInput id="question" v-model="questionText" />
+      <ChatInput @submit="sendQuestion" id="question" v-model="questionText" />
       <BaseButton @click="sendQuestion" type="submit">Send</BaseButton>
     </form>
-    <div class="flex-9 flex flex-col gap-4 text-center">
+    <div class="flex-6 flex flex-col gap-4 text-center h-full overflow-y-auto">
+      <ChatBlock class="w-full !h-20" />
       <div
         v-if="!msgStore.messages || !msgStore.messages.length"
         class="text-title-l text-blood p-10"

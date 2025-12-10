@@ -13,12 +13,15 @@ export const useUserStore = defineStore('user', () => {
   }
   const accessToken = ref<string>('')
   const user = ref<IUser>(emptyUser)
-  const setUserAndToken = (newUser: IUserResponse) => {
+  const setUser = (newUser: IUser) => {
     user.value.email = newUser.email
     user.value.name = newUser.name
     user.value.id = newUser.id
     user.value.createdAt = newUser.createdAt
     user.value.updatedAt = newUser.updatedAt
+  }
+  const setUserAndToken = (newUser: IUserResponse) => {
+    setUser(newUser)
     accessToken.value = newUser.accessToken
   }
   async function login(un: string, pw: string) {
@@ -31,5 +34,5 @@ export const useUserStore = defineStore('user', () => {
     userApi.logout()
   }
 
-  return { user, accessToken, login, logout, setUserAndToken }
+  return { user, accessToken, login, logout, setUser, setUserAndToken }
 })

@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useUserStore } from '@/stores/user'
+import { useMsgStore } from '@/stores/msg'
 const userStore = useUserStore()
+const msgStore = useMsgStore()
 const isLoggedIn = computed(() => !!userStore.user.id)
 </script>
 
@@ -16,5 +18,6 @@ const isLoggedIn = computed(() => !!userStore.user.id)
       Log out
     </div>
     <div v-if="isLoggedIn" class="text-title-l">Hi, {{ userStore.user?.name }}</div>
+    <div class="text-body-s">{{ msgStore.tip?.chatId }}</div>
   </div>
 </template>
