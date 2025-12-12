@@ -18,6 +18,5 @@ const isLoggedIn = computed(() => !!userStore.user.id)
       Log out
     </div>
     <div v-if="isLoggedIn" class="text-title-l">Hi, {{ userStore.user?.name }}</div>
-    <div class="text-body-s">{{ msgStore.tip?.chatId }}</div>
   </div>
 </template>

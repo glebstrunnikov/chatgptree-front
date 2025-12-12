@@ -58,6 +58,7 @@ export const useMsgStore = defineStore('msg', () => {
 
   async function loadBranch(cId: string, path: string) {
     const res = await chatApi.loadBranch(cId, path)
+    console.log(res)
     if (!res.data) {
       throw new Error('No messages returned from loadBranch')
     }

@@ -15,7 +15,6 @@ export const userApi = {
   },
   me: async () => {
     const res = await http.get('/users/me')
-    console.log(res)
     return res
   },
   refresh: async () => {

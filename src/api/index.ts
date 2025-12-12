@@ -55,7 +55,6 @@ http.interceptors.response.use(
         await updateAccessToken()
         await new Promise((resolve) => setTimeout(resolve, 100))
         const retry = await http(originalRequest)
-        console.log(retry)
         return retry
       }
       // else if (error?.response === 500) {
