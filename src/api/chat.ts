@@ -22,4 +22,8 @@ export const chatApi = {
     const res = await http.get(`/chat/load-branch/${chatId}/${path}`)
     return res
   },
+  loadChatList: async () => {
+    const res = await http.get('/chat/list')
+    return res
+  },
 }

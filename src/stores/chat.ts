@@ -4,12 +4,13 @@ import type { IMessage } from '@/types/message'
 import { useUserStore } from './user'
 import { chatApi } from '@/api/chat'
 
-export const useMsgStore = defineStore('msg', () => {
+export const useChatStore = defineStore('chat', () => {
   const userStore = useUserStore()
   const messages = ref<IMessage[]>([])
 
   const chatId = ref<string>('')
   const tip = ref<IMessage | null>(null)
+  const chatList = ref<any[]>([])
 
   function getHistoryByTip(tipPath: string): IMessage[] {
     const result: IMessage[] = []
@@ -41,11 +42,16 @@ export const useMsgStore = defineStore('msg', () => {
     tip.value = res.data.messages[res.data.messages.length - 1]
   }
 
-  async function ask(question: string) {
+  async function ask(question: string, path?: string) {
     if (!tip.value) {
       throw new Error('No tip message set')
     }
-    const res = await chatApi.ask(question, userStore.user.id, tip.value.chatId!, tip.value.path)
+    const res = await chatApi.ask(
+      question,
+      userStore.user.id,
+      tip.value.chatId!,
+      path ?? tip.value.path,
+    )
     messages.value = messages.value.concat(res.data)
     tip.value = res.data[res.data.length - 1]
   }
@@ -67,14 +73,22 @@ export const useMsgStore = defineStore('msg', () => {
     tip.value = messages.value[messages.value.length - 1]!
   }
 
+  async function loadChatList() {
+    const res = await chatApi.loadChatList()
+    console.log(res)
+    chatList.value = res.data
+  }
+
   return {
     messages,
     chatId,
     tip,
     branch,
+    chatList,
     createChat,
     ask,
     loadBranch,
     clearMessages,
+    loadChatList,
   }
 })

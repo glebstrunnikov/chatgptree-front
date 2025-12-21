@@ -41,7 +41,9 @@ http.interceptors.response.use(
   async (error) => {
     if (error) {
       const originalRequest = error.config
+      console.log(originalRequest.url)
       if (originalRequest._retry || originalRequest.url.includes('/users/refresh')) {
+        console.log('returning...')
         return Promise.reject(error)
       }
 

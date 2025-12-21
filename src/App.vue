@@ -6,10 +6,17 @@ const userStore = useUserStore()
 const loading = ref(true)
 
 onMounted(async () => {
-  const user = await userApi.me()
-  userStore.setUser(user.data)
-  await nextTick()
-  loading.value = false
+  try {
+    const user = await userApi.me()
+    if (user?.data) {
+      userStore.setUser(user.data)
+    }
+  } catch (error) {
+    console.log('Failed to load user:', error)
+  } finally {
+    await nextTick()
+    loading.value = false
+  }
 })
 </script>
 

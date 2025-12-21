@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useUserStore } from '@/stores/user'
-import { useMsgStore } from '@/stores/msg'
+import { useChatStore } from '@/stores/chat'
 const userStore = useUserStore()
-const msgStore = useMsgStore()
+const chatStore = useChatStore()
 const isLoggedIn = computed(() => !!userStore.user.id)
 </script>
 
 <template>
   <div class="w-full flex justify-start items-center gap-10 p-6">
     <RouterLink to="/create-chat"><div class="text-title-l">Talk to neuromoron</div></RouterLink>
+    <RouterLink v-if="isLoggedIn" to="/chat-list"><div class="text-title-l">Chats</div></RouterLink>
     <RouterLink v-if="!isLoggedIn" to="/register"
       ><div class="text-title-l">Register</div></RouterLink
     >

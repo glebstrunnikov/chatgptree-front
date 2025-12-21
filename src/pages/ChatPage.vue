@@ -1,27 +1,27 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useMsgStore } from '@/stores/msg'
+import { useChatStore } from '@/stores/chat'
 import ChatInput from '@/components/chat/ChatInput.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import ChatBlock from '@/components/chat/ChatBlock.vue'
 import type { IMessage } from '@/types/message'
 const route = useRoute()
 const router = useRouter()
-const msgStore = useMsgStore()
+const chatStore = useChatStore()
 const questionText = ref('')
 const query = computed(() => route.query)
 async function sendQuestion() {
-  await msgStore.ask(questionText.value)
+  await chatStore.ask(questionText.value, query.value.path as string)
   questionText.value = ''
   router.replace({
-    query: { ...route.query, path: msgStore.tip!.path },
+    query: { ...route.query, path: chatStore.tip!.path },
   })
 }
 
 async function loadBranchData() {
   if (query.value.id && query.value.path) {
-    await msgStore.loadBranch(query.value.id as string, query.value.path as string)
+    await chatStore.loadBranch(query.value.id as string, query.value.path as string)
   }
 }
 
@@ -34,17 +34,17 @@ watch(query, async () => {
   await loadBranchData()
 })
 onUnmounted(() => {
-  msgStore.clearMessages()
+  chatStore.clearMessages()
 })
 
 const groupedMessages = computed(() => {
   const result: IMessage[][] = []
-  for (let i = 0; i < msgStore.messages.length; i++) {
-    if (i === msgStore.messages.length - 1) {
-      result.push([msgStore.messages[i]!])
+  for (let i = 0; i < chatStore.messages.length; i++) {
+    if (i === chatStore.messages.length - 1) {
+      result.push([chatStore.messages[i]!])
     } else {
       if (i % 2 !== 0) {
-        result.push([msgStore.messages[i - 1]!, msgStore.messages[i]!])
+        result.push([chatStore.messages[i - 1]!, chatStore.messages[i]!])
       }
     }
   }
@@ -64,7 +64,7 @@ const groupedMessages = computed(() => {
       class="w-full flex-6 flex flex-col gap-4 text-center h-full overflow-y-auto overflow-x-hidden"
     >
       <div
-        v-if="!msgStore.messages || !msgStore.messages.length"
+        v-if="!chatStore.messages || !chatStore.messages.length"
         class="text-title-l text-blood p-10"
       >
         Tetx will be shown here

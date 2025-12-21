@@ -1,18 +1,25 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import type { IMessage } from '@/types/message'
+import { useChatStore } from '@/stores/chat'
 import ChatMessage from '@/components/chat/ChatMessage.vue'
 import ChatBubble from './ChatBubble.vue'
+import ChatNextBubble from './ChatNextBubble.vue'
 const props = defineProps<{
   messages: [IMessage, IMessage] | [IMessage]
 }>()
+const chatStore = useChatStore()
 const tails = computed(() => props.messages[1]?.tails || null)
 </script>
 
 <template>
   <div class="grid grid-cols-3">
     <div class="row-start-1 row-span-1 col-start-1 col-span-2">
-      <ChatMessage :role="props.messages[0].role" :message="props.messages[0].content" />
+      <ChatMessage
+        :role="props.messages[0].role"
+        :message="props.messages[0].content"
+        :backLink="`/chat?id=${chatStore.tip?.chatId}&path=${props.messages[0].path}`"
+      />
     </div>
     <div class="row-start-2 row-span-1 col-start-1 col-span-2">
       <ChatMessage
@@ -42,6 +49,12 @@ const tails = computed(() => props.messages[1]?.tails || null)
           <ChatBubble v-for="tail in tails" :key="tail.id" :tail="tail" />
         </div>
       </div>
+    </div>
+    <div
+      v-if="props.messages[0]?.tipTail?.length"
+      class="row-start-3 row-span-1 col-start-1 col-span-2"
+    >
+      <ChatNextBubble :paths="props.messages[0].tipTail" />
     </div>
   </div>
 </template>

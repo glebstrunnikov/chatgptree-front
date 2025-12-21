@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 
-import { useMsgStore } from '@/stores/msg'
+import { useChatStore } from '@/stores/chat'
 import { useRouter } from 'vue-router'
 import ChatInput from '@/components/chat/ChatInput.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 
-const msgStore = useMsgStore()
+const chatStore = useChatStore()
 const router = useRouter()
 
 const showLoader = ref(false)
@@ -14,9 +14,12 @@ const questionText = ref('')
 
 async function sendQuestion() {
   showLoader.value = true
-  await msgStore.createChat(questionText.value)
+  await chatStore.createChat(questionText.value)
   router.push(
-    '/chat?id=' + msgStore.chatId + '&path=' + msgStore.messages[msgStore.messages.length - 1].path,
+    '/chat?id=' +
+      chatStore.chatId +
+      '&path=' +
+      chatStore.messages[chatStore.messages.length - 1].path,
   )
 }
 </script>
