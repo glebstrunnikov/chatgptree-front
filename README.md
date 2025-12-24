@@ -1,3 +1,5 @@
+Веб-интерфейс для обмена сообщениями к chatGPT (конкретнее - Chat Completions API) в древовидном формате. От любого сообщения можно начать новую ветку, и робот выдает ответ исходя только из того контекста, который в этой ветке присутствует. Между ветками можно переключаться прямо в окне диалога, кликая по баблам, где написан первый ответ в ветке и общее количество ответов в ней. В этом репозитории - фронтенд, бэк должен быть по соседству.
+
 # .
 
 This template should help get you started developing with Vue 3 in Vite.
@@ -9,7 +11,7 @@ This template should help get you started developing with Vue 3 in Vite.
 ## Recommended Browser Setup
 
 - Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
+  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
   - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
 - Firefox:
   - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
